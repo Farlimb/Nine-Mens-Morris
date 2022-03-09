@@ -8,15 +8,7 @@ public class Main {
         Field field = new Field();
         field.setUp();
         field.update();
-        Player player = new Player(Field.Color.RED);
-        Mark mark = new Mark();
-        System.out.println("Zadaj kde to chces dat");
-        int i= sc.nextInt();
-        mark.exec(i-1,player,field);
-        field.update();
-        i= sc.nextInt();
-        mark.exec(i-1,player,field);
+        field.placement();
         field.update();
     }
-
 }

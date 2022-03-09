@@ -1,6 +1,6 @@
 package sk.tuke.kpi.kp.ninemensmorris;
 import java.util.ArrayList;
-
+import java.util.*;
 public class Field {
     private static String reset = "\u001B[0m";
     private ArrayList<Position> positions = new ArrayList<Position>();
@@ -11,6 +11,8 @@ public class Field {
     private int startingPlayerCountRed = 9;
     private int startingPlayerCountBlue = 9;
     public enum Color {RED, BLUE};
+    Player player1 = new Player(Field.Color.RED);
+    Player player2 = new Player(Field.Color.BLUE);
 
     public ArrayList<Position> getPositions() {
         return positions;
@@ -119,7 +121,29 @@ public class Field {
         positions.get(23).setLeft(positions.get(22));
         positions.get(23).setUp(positions.get(14));
     }
-
+    public void placement(){
+        Scanner sc= new Scanner(System.in);
+        int i,x;
+        Mark mark = new Mark();
+        while(startingPlayerCountBlue > 0 || startingPlayerCountRed > 0 ){
+            System.out.println("Zadaj kde to chces dat");
+            System.out.println("Ide cerveny");
+            i= sc.nextInt();
+            while(i>24 || i<1 || !mark.exec(i - 1, player1, this)){
+                System.out.println("Zly input, Skus znova");
+                i= sc.nextInt();
+            }
+            update();
+            System.out.println("Ide modry");
+            x= sc.nextInt();
+            while(x>24 || x<1 || !mark.exec(x - 1, player2, this)){
+                System.out.println("Zly input, Skus znova");
+                x= sc.nextInt();
+            }
+            startingPlayerCountBlue--;
+            update();
+        }
+    }
     public void update(){
         ArrayList<Position> positions = this.getPositions();
         System.out.println(positions.get(0).getColor()+"01"+reset+"-----------"+positions.get(1).getColor()+"02"+reset+"-----------"+positions.get(2).getColor()+"03");
