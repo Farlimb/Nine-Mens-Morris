@@ -10,7 +10,7 @@ public class Mark {
             return false;
         }
         positions.get(i).setPlayer(player);
-        if(player.getcolor()== Field.Color.RED) {
+        if(player.getColor()== Field.Color.RED) {
             positions.get(i).setColor("\u001B[31m");
         }
         else{

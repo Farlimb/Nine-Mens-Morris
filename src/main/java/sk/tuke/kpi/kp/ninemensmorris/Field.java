@@ -4,15 +4,15 @@ import java.util.*;
 public class Field {
     private static String reset = "\u001B[0m";
     private ArrayList<Position> positions = new ArrayList<Position>();
-    private ArrayList<Player> red = new ArrayList<Player>();
-    private ArrayList<Player> blue = new ArrayList<Player>();
-    private int endingPos = 23;
-    private int startingPos = 0;
+    private final int endingPos = 23;
+    private final int startingPos = 0;
     private int startingPlayerCountRed = 9;
     private int startingPlayerCountBlue = 9;
+    private int actualPlayerCountRed = 9;
+    private int actualPlayerCountBlue = 9;
     public enum Color {RED, BLUE};
-    Player player1 = new Player(Field.Color.RED);
-    Player player2 = new Player(Field.Color.BLUE);
+    private final Player player1 = new Player(Field.Color.RED);
+    private final Player player2 = new Player(Field.Color.BLUE);
 
     public ArrayList<Position> getPositions() {
         return positions;
@@ -20,13 +20,19 @@ public class Field {
     public int getEndingPos() {
         return endingPos;
     }
-    public int getStartingPlayerCountRed(){
-        return startingPlayerCountRed;
+    public int getActualPlayerCountBlue(){
+        return actualPlayerCountBlue;
     }
-    public int getStartingPlayerCountBlue(){
-        return startingPlayerCountBlue;
+    public int getActualPlayerCountRed(){
+        return actualPlayerCountRed;
     }
 
+    public void minusActualPlayerCountBlue(){
+            actualPlayerCountBlue--;
+    }
+    public void minusActualPlayerCountRed(){
+        actualPlayerCountRed--;
+    }
 
     public void setUp(){
         for (int i=startingPos;i<=endingPos;i++){
@@ -43,6 +49,7 @@ public class Field {
 
         positions.get(2).setLeft(positions.get(1));
         positions.get(2).setDown(positions.get(14));
+
         positions.get(3).setRight(positions.get(4));
         positions.get(3).setDown(positions.get(10));
 
@@ -122,27 +129,98 @@ public class Field {
         positions.get(23).setUp(positions.get(14));
     }
     public void placement(){
+        Remove remove = new Remove();
+        Mill mill = new Mill();
         Scanner sc= new Scanner(System.in);
+        boolean z;
         int i,x;
         Mark mark = new Mark();
         while(startingPlayerCountBlue > 0 || startingPlayerCountRed > 0 ){
-            System.out.println("Zadaj kde to chces dat");
-            System.out.println("Ide cerveny");
+            System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
+            System.out.println("Červeny je na rade");
             i= sc.nextInt();
             while(i>24 || i<1 || !mark.exec(i - 1, player1, this)){
                 System.out.println("Zly input, Skus znova");
                 i= sc.nextInt();
             }
+            z = mill.check(i-1,this);
             update();
-            System.out.println("Ide modry");
+            if(z){
+                System.out.println("Odstran jedneho z druheho teamu");
+                x= sc.nextInt();
+                remove.remove(x-1,this,player1);
+            }
+            System.out.println(z);
+            startingPlayerCountRed--;
+            System.out.println("Modry je na rade");
+            System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
             x= sc.nextInt();
             while(x>24 || x<1 || !mark.exec(x - 1, player2, this)){
                 System.out.println("Zly input, Skus znova");
                 x= sc.nextInt();
             }
             startingPlayerCountBlue--;
+            z = mill.check(x-1,this);
             update();
+            System.out.println(z);
+            if(z){
+                System.out.println("Odstran jedneho z druheho teamu");
+                x= sc.nextInt();
+                remove.remove(x-1,this,player2);
+            }
         }
+    }
+    public void movement(){
+        Remove remove = new Remove();
+        Mill mill = new Mill();
+        Scanner sc= new Scanner(System.in);
+        Move move = new Move();
+        boolean z;
+        int i,x;
+        while(actualPlayerCountRed>2 || actualPlayerCountBlue>2) {
+            System.out.println("Červeny je na rade");
+            System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+            i = sc.nextInt();
+            System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+            x = sc.nextInt();
+            while (i > 24 || i < 1 || !move.check(i - 1, x - 1, this, player1)) {
+                System.out.println("Zly input, skus znova");
+                System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+                i = sc.nextInt();
+                System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+                x = sc.nextInt();
+            }
+            z = mill.check(x-1,this);
+            update();
+            System.out.println(z);
+            if(z){
+                System.out.println("Odstran jedneho z druheho teamu");
+                x= sc.nextInt();
+                remove.remove(x-1,this,player1);
+            }
+
+            System.out.println("Modrý je na rade");
+            System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+            i = sc.nextInt();
+            System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+            x = sc.nextInt();
+            while (i > 24 || i < 1 || !move.check(i - 1, x - 1, this, player2)) {
+                System.out.println("Zly input, skus znova");
+                System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+                i = sc.nextInt();
+                System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+                x = sc.nextInt();
+            }
+            z = mill.check(x-1,this);
+            update();
+            System.out.println(z);
+            if(z){
+                System.out.println("Odstran jedneho z druheho teamu");
+                x= sc.nextInt();
+                remove.remove(x-1,this,player2);
+            }
+        }
+
     }
     public void update(){
         ArrayList<Position> positions = this.getPositions();

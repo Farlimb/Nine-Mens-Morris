@@ -9,6 +9,7 @@ public class Main {
         field.setUp();
         field.update();
         field.placement();
-        field.update();
+        field.movement();
     }
+
 }
