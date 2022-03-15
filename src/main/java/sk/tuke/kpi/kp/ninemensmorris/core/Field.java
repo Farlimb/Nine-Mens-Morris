@@ -4,12 +4,13 @@ import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
 import java.util.ArrayList;
 import java.util.*;
 public class Field {
-    private final ArrayList<Position> positions = new ArrayList<Position>();
+    private final ArrayList<Position> positions = new ArrayList<>();
     private final int endingPos = 23;
-    private int startingPlayerCountRed = 3;
-    private int startingPlayerCountBlue = 3;
-    private int actualPlayerCountRed = 3;
-    private int actualPlayerCountBlue = 3;
+    private final Scanner sc= new Scanner(System.in);
+    private int startingPlayerCountRed = 9;
+    private int startingPlayerCountBlue = 9;
+    private int actualPlayerCountRed = 9;
+    private int actualPlayerCountBlue = 9;
     public enum Color {RED, BLUE}
     private final Player player1 = new Player(Field.Color.RED);
     private final Player player2 = new Player(Field.Color.BLUE);
@@ -134,7 +135,6 @@ public class Field {
         ConsoleUI consoleUI = new ConsoleUI(this);
         Remove remove = new Remove();
         Mill mill = new Mill();
-        Scanner sc= new Scanner(System.in);
         boolean z;
         int i,x;
         Mark mark = new Mark();
@@ -146,6 +146,7 @@ public class Field {
                 System.out.println("Zly input, Skus znova");
                 i= sc.nextInt();
             }
+
             z = mill.check(i-1,this);
             consoleUI.show();
             if(z){
@@ -153,6 +154,7 @@ public class Field {
                 x= sc.nextInt();
                 remove.remove(x-1,this,player1);
             }
+
             //System.out.println(z);
             startingPlayerCountRed--;
             System.out.println("Modry je na rade");
@@ -177,7 +179,6 @@ public class Field {
     public void movement(){
         Remove remove = new Remove();
         Mill mill = new Mill();
-        Scanner sc= new Scanner(System.in);
         Move move = new Move();
         boolean z;
         int i,x;
