@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.ninemensmorris;
+package sk.tuke.kpi.kp.ninemensmorris.core;
 
 import java.util.ArrayList;
 

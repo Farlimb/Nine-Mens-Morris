@@ -1,4 +1,6 @@
-package sk.tuke.kpi.kp.ninemensmorris;
+package sk.tuke.kpi.kp.ninemensmorris.core;
+import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
+
 import java.util.ArrayList;
 import java.util.*;
 public class Field {
@@ -127,7 +129,9 @@ public class Field {
         positions.get(23).setLeft(positions.get(22));
         positions.get(23).setUp(positions.get(14));
     }
+
     public void placement(){
+        ConsoleUI consoleUI = new ConsoleUI(this);
         Remove remove = new Remove();
         Mill mill = new Mill();
         Scanner sc= new Scanner(System.in);
@@ -143,13 +147,13 @@ public class Field {
                 i= sc.nextInt();
             }
             z = mill.check(i-1,this);
-            show();
+            consoleUI.show();
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= sc.nextInt();
                 remove.remove(x-1,this,player1);
             }
-            System.out.println(z);
+            //System.out.println(z);
             startingPlayerCountRed--;
             System.out.println("Modry je na rade");
             System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
@@ -160,8 +164,8 @@ public class Field {
             }
             startingPlayerCountBlue--;
             z = mill.check(x-1,this);
-            show();
-            System.out.println(z);
+            consoleUI.show();
+            //System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= sc.nextInt();
@@ -169,6 +173,7 @@ public class Field {
             }
         }
     }
+
     public void movement(){
         Remove remove = new Remove();
         Mill mill = new Mill();
@@ -190,7 +195,6 @@ public class Field {
                 x = sc.nextInt();
             }
             z = mill.check(x-1,this);
-            show();
             //System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
@@ -218,7 +222,6 @@ public class Field {
                 x = sc.nextInt();
             }
             z = mill.check(x-1,this);
-            show();
             //System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
@@ -235,22 +238,5 @@ public class Field {
             }
         }
 
-    }
-    public void show(){
-        ArrayList<Position> positions = this.getPositions();
-        String reset = "\u001B[0m";
-        System.out.println(positions.get(0).getColor()+"01"+ reset +"-----------"+positions.get(1).getColor()+"02"+ reset +"-----------"+positions.get(2).getColor()+"03");
-        System.out.println(reset +"|            |             |");
-        System.out.println("|    "+positions.get(3).getColor()+"04"+ reset +"------"+positions.get(4).getColor()+"05"+ reset +"------"+positions.get(5).getColor()+"06"+ reset +"    |");
-        System.out.println("|    |       |        |    |");
-        System.out.println("|    |  "+positions.get(6).getColor()+"07"+ reset +"---"+positions.get(7).getColor()+"08"+ reset +"---"+positions.get(8).getColor()+"09"+ reset +"  |    |");
-        System.out.println("|    |  |          |  |    |");
-        System.out.println(positions.get(9).getColor()+"10"+ reset +"--"+positions.get(10).getColor()+"11"+ reset +"--"+positions.get(11).getColor()+"12        "+positions.get(12).getColor()+"13"+ reset +"--"+positions.get(13).getColor()+"14"+ reset +"--"+positions.get(14).getColor()+"15");
-        System.out.println(reset +"|    |  |          |  |    |");
-        System.out.println("|    |  "+positions.get(15).getColor()+"16"+ reset +"---"+positions.get(16).getColor()+"17"+ reset +"---"+positions.get(17).getColor()+"18"+ reset +"  |    |");
-        System.out.println("|    |       |        |    |");
-        System.out.println("|    "+positions.get(18).getColor()+"19"+ reset +"------"+positions.get(19).getColor()+"20"+ reset +"------"+positions.get(20).getColor()+"21"+ reset +"    |");
-        System.out.println("|            |             |");
-        System.out.println(positions.get(21).getColor()+"22"+ reset +"-----------"+positions.get(22).getColor()+"23"+ reset +"-----------"+positions.get(23).getColor()+"24"+ reset);
     }
 }

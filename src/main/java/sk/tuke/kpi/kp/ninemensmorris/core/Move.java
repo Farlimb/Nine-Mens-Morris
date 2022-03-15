@@ -1,4 +1,6 @@
-package sk.tuke.kpi.kp.ninemensmorris;
+package sk.tuke.kpi.kp.ninemensmorris.core;
+
+import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
 
 public class Move {
     public boolean check(int i,int x,Field field,Player player){
@@ -13,6 +15,7 @@ public class Move {
         return true;
     }
     private void move(int i, int x,Field field){
+        ConsoleUI consoleUI = new ConsoleUI(field);
         Position positioni = field.getPositions().get(i);
         Position positionx = field.getPositions().get(x);
 
@@ -22,7 +25,7 @@ public class Move {
             positioni.setColor("\u001B[0m");
             positioni.setPlayer(null);
         }
-        field.show();
+        consoleUI.show();
     }
 
     public boolean checkIfCanAnyoneMove(Field field,Player player){

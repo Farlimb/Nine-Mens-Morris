@@ -1,4 +1,4 @@
-package sk.tuke.kpi.kp.ninemensmorris;
+package sk.tuke.kpi.kp.ninemensmorris.core;
 
 public class Player {
     private Field.Color color = null;

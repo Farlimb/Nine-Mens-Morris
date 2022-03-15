@@ -56,7 +56,7 @@
 <!--                    <archive>-->
 <!--                        <manifest>-->
 <!--                            <addClasspath>true</addClasspath>-->
-<!--                            <mainClass>sk.tuke.kpi.kp.ninemensmorris.Main</mainClass>-->
+<!--                            <mainClass>sk.tuke.kpi.kp.ninemensmorris.core.Main</mainClass>-->
 <!--                        </manifest>-->
 <!--                    </archive>-->
 <!--                </configuration>-->
