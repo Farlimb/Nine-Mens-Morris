@@ -2,15 +2,13 @@ package sk.tuke.kpi.kp.ninemensmorris;
 import java.util.ArrayList;
 import java.util.*;
 public class Field {
-    private static String reset = "\u001B[0m";
-    private ArrayList<Position> positions = new ArrayList<Position>();
+    private final ArrayList<Position> positions = new ArrayList<Position>();
     private final int endingPos = 23;
-    private final int startingPos = 0;
     private int startingPlayerCountRed = 9;
     private int startingPlayerCountBlue = 9;
     private int actualPlayerCountRed = 9;
     private int actualPlayerCountBlue = 9;
-    public enum Color {RED, BLUE};
+    public enum Color {RED, BLUE}
     private final Player player1 = new Player(Field.Color.RED);
     private final Player player2 = new Player(Field.Color.BLUE);
 
@@ -35,7 +33,8 @@ public class Field {
     }
 
     public void setUp(){
-        for (int i=startingPos;i<=endingPos;i++){
+        int startingPos = 0;
+        for (int i = startingPos; i<=endingPos; i++){
             positions.add(new Position());
             positions.get(i).setId(i);
             positions.get(i).setPlayer(null);
@@ -177,7 +176,7 @@ public class Field {
         Move move = new Move();
         boolean z;
         int i,x;
-        while(actualPlayerCountRed>2 || actualPlayerCountBlue>2) {
+        while((actualPlayerCountRed>2 || actualPlayerCountBlue>2)) {
             System.out.println("Červeny je na rade");
             System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
             i = sc.nextInt();
@@ -198,7 +197,10 @@ public class Field {
                 x= sc.nextInt();
                 remove.remove(x-1,this,player1);
             }
-
+            if((!move.checkIfCanAnyoneMove(this,player2))){
+                System.out.println("MODRY SA NEVIE POHNUT CERVENY VYHRAVA");
+                break;
+            }
             System.out.println("Modrý je na rade");
             System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
             i = sc.nextInt();
@@ -219,23 +221,28 @@ public class Field {
                 x= sc.nextInt();
                 remove.remove(x-1,this,player2);
             }
+            if((!move.checkIfCanAnyoneMove(this,player1))){
+                System.out.println("CERVENY SA NEVIE POHNUT MODRY VYHRAVA");
+                break;
+            }
         }
 
     }
     public void update(){
         ArrayList<Position> positions = this.getPositions();
-        System.out.println(positions.get(0).getColor()+"01"+reset+"-----------"+positions.get(1).getColor()+"02"+reset+"-----------"+positions.get(2).getColor()+"03");
-        System.out.println(reset+"|            |             |");
-        System.out.println("|    "+positions.get(3).getColor()+"04"+reset+"------"+positions.get(4).getColor()+"05"+reset+"------"+positions.get(5).getColor()+"06"+reset+"    |");
+        String reset = "\u001B[0m";
+        System.out.println(positions.get(0).getColor()+"01"+ reset +"-----------"+positions.get(1).getColor()+"02"+ reset +"-----------"+positions.get(2).getColor()+"03");
+        System.out.println(reset +"|            |             |");
+        System.out.println("|    "+positions.get(3).getColor()+"04"+ reset +"------"+positions.get(4).getColor()+"05"+ reset +"------"+positions.get(5).getColor()+"06"+ reset +"    |");
         System.out.println("|    |       |        |    |");
-        System.out.println("|    |  "+positions.get(6).getColor()+"07"+reset+"---"+positions.get(7).getColor()+"08"+reset+"---"+positions.get(8).getColor()+"09"+reset+"  |    |");
+        System.out.println("|    |  "+positions.get(6).getColor()+"07"+ reset +"---"+positions.get(7).getColor()+"08"+ reset +"---"+positions.get(8).getColor()+"09"+ reset +"  |    |");
         System.out.println("|    |  |          |  |    |");
-        System.out.println(positions.get(9).getColor()+"10"+reset+"--"+positions.get(10).getColor()+"11"+reset+"--"+positions.get(11).getColor()+"12        "+positions.get(12).getColor()+"13"+reset+"--"+positions.get(13).getColor()+"14"+reset+"--"+positions.get(14).getColor()+"15");
-        System.out.println(reset+"|    |  |          |  |    |");
-        System.out.println("|    |  "+positions.get(15).getColor()+"16"+reset+"---"+positions.get(16).getColor()+"17"+reset+"---"+positions.get(17).getColor()+"18"+reset+"  |    |");
+        System.out.println(positions.get(9).getColor()+"10"+ reset +"--"+positions.get(10).getColor()+"11"+ reset +"--"+positions.get(11).getColor()+"12        "+positions.get(12).getColor()+"13"+ reset +"--"+positions.get(13).getColor()+"14"+ reset +"--"+positions.get(14).getColor()+"15");
+        System.out.println(reset +"|    |  |          |  |    |");
+        System.out.println("|    |  "+positions.get(15).getColor()+"16"+ reset +"---"+positions.get(16).getColor()+"17"+ reset +"---"+positions.get(17).getColor()+"18"+ reset +"  |    |");
         System.out.println("|    |       |        |    |");
-        System.out.println("|    "+positions.get(18).getColor()+"19"+reset+"------"+positions.get(19).getColor()+"20"+reset+"------"+positions.get(20).getColor()+"21"+reset+"    |");
+        System.out.println("|    "+positions.get(18).getColor()+"19"+ reset +"------"+positions.get(19).getColor()+"20"+ reset +"------"+positions.get(20).getColor()+"21"+ reset +"    |");
         System.out.println("|            |             |");
-        System.out.println(positions.get(21).getColor()+"22"+reset+"-----------"+positions.get(22).getColor()+"23"+reset+"-----------"+positions.get(23).getColor()+"24"+reset);
+        System.out.println(positions.get(21).getColor()+"22"+ reset +"-----------"+positions.get(22).getColor()+"23"+ reset +"-----------"+positions.get(23).getColor()+"24"+ reset);
     }
 }

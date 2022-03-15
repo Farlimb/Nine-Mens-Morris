@@ -25,7 +25,18 @@ public class Move {
         field.update();
     }
 
-    public void checkIfCanAnyoneMove(Field field,Player player){
-
+    public boolean checkIfCanAnyoneMove(Field field,Player player){
+        for(int i=0; i<=23; i++){
+            Position position = field.getPositions().get(i);
+            if(position.getPlayer()==player){
+                if((position.getLeft()!=null && position.getLeft().getPlayer()==null)
+                        || (position.getRight()!=null && position.getRight().getPlayer()==null)
+                        || (position.getDown()!=null && position.getDown().getPlayer()==null)
+                        || (position.getUp()!=null && position.getUp().getPlayer()==null) ){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
