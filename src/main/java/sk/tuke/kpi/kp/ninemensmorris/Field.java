@@ -4,10 +4,10 @@ import java.util.*;
 public class Field {
     private final ArrayList<Position> positions = new ArrayList<Position>();
     private final int endingPos = 23;
-    private int startingPlayerCountRed = 9;
-    private int startingPlayerCountBlue = 9;
-    private int actualPlayerCountRed = 9;
-    private int actualPlayerCountBlue = 9;
+    private int startingPlayerCountRed = 3;
+    private int startingPlayerCountBlue = 3;
+    private int actualPlayerCountRed = 3;
+    private int actualPlayerCountBlue = 3;
     public enum Color {RED, BLUE}
     private final Player player1 = new Player(Field.Color.RED);
     private final Player player2 = new Player(Field.Color.BLUE);
@@ -143,7 +143,7 @@ public class Field {
                 i= sc.nextInt();
             }
             z = mill.check(i-1,this);
-            update();
+            show();
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= sc.nextInt();
@@ -160,7 +160,7 @@ public class Field {
             }
             startingPlayerCountBlue--;
             z = mill.check(x-1,this);
-            update();
+            show();
             System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
@@ -176,7 +176,7 @@ public class Field {
         Move move = new Move();
         boolean z;
         int i,x;
-        while((actualPlayerCountRed>2 || actualPlayerCountBlue>2)) {
+        while((actualPlayerCountRed>2 && actualPlayerCountBlue>2)) {
             System.out.println("Červeny je na rade");
             System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
             i = sc.nextInt();
@@ -190,12 +190,16 @@ public class Field {
                 x = sc.nextInt();
             }
             z = mill.check(x-1,this);
-            update();
-            System.out.println(z);
+            show();
+            //System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= sc.nextInt();
                 remove.remove(x-1,this,player1);
+            }
+            if(actualPlayerCountBlue<3) {
+                System.out.println("Cerveny má menej ako tri pozicie! Prehral!");
+                break;
             }
             if((!move.checkIfCanAnyoneMove(this,player2))){
                 System.out.println("MODRY SA NEVIE POHNUT CERVENY VYHRAVA");
@@ -214,12 +218,16 @@ public class Field {
                 x = sc.nextInt();
             }
             z = mill.check(x-1,this);
-            update();
-            System.out.println(z);
+            show();
+            //System.out.println(z);
             if(z){
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= sc.nextInt();
                 remove.remove(x-1,this,player2);
+            }
+            if(actualPlayerCountRed<3) {
+                System.out.println("Cerveny má menej ako tri pozicie! Prehral!");
+                break;
             }
             if((!move.checkIfCanAnyoneMove(this,player1))){
                 System.out.println("CERVENY SA NEVIE POHNUT MODRY VYHRAVA");
@@ -228,7 +236,7 @@ public class Field {
         }
 
     }
-    public void update(){
+    public void show(){
         ArrayList<Position> positions = this.getPositions();
         String reset = "\u001B[0m";
         System.out.println(positions.get(0).getColor()+"01"+ reset +"-----------"+positions.get(1).getColor()+"02"+ reset +"-----------"+positions.get(2).getColor()+"03");

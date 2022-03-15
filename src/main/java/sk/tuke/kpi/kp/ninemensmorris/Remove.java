@@ -16,7 +16,7 @@ public class Remove {
             else {
                 position.setPlayer(null);
                 position.setColor("\u001B[0m");
-                field.update();
+                field.show();
                 if(player.getColor()==RED){
                     field.minusActualPlayerCountBlue();
                 }

@@ -22,7 +22,7 @@ public class Move {
             positioni.setColor("\u001B[0m");
             positioni.setPlayer(null);
         }
-        field.update();
+        field.show();
     }
 
     public boolean checkIfCanAnyoneMove(Field field,Player player){
