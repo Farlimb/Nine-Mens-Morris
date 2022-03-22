@@ -88,8 +88,9 @@ public class ConsoleUI {
 
     private void printTopScores(){
         var scores = scoreService.getTopScores("nine-mens-morris");
-        for(Score score : scores) {
-            System.out.printf("%s %d\n", score.getPlayer(), score.getPoints());
+        for(int i = 0; i < scores.size();i++) {
+            var score = scores.get(i);
+            System.out.printf("%d. %s %d\n",i+1,score.getPlayer(), score.getPoints());
         }
     }
 }

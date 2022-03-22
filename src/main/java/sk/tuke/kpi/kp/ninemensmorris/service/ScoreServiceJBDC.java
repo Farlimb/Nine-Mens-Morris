@@ -27,7 +27,6 @@ public class ScoreServiceJBDC implements ScoreService{
         } catch (SQLException e) {
             throw new GamestudioException("Problem inserting score", e);
         }
-
     }
 
     @Override
