@@ -18,7 +18,6 @@ class FieldTest {
         this.field=new Field();
         field.setUp();
         Position position = field.getPositions().get(randomGenerator.nextInt(24));
-        System.out.println(position.getId());
         position.setColor("RED");
         position.setPlayer(player);
         z++;

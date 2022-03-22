@@ -6,7 +6,8 @@ import java.util.*;
 public class Field {
     private final ArrayList<Position> positions = new ArrayList<>();
     private final int endingPos = 23;
-    private final Scanner sc= new Scanner(System.in);
+    private Remove remove = new Remove();
+    private Mill mill = new Mill();
     private int startingPlayerCountRed = 9;
     private int startingPlayerCountBlue = 9;
     private int actualPlayerCountRed = 9;
@@ -133,77 +134,49 @@ public class Field {
 
     public void placement(){
         ConsoleUI consoleUI = new ConsoleUI(this);
-        Remove remove = new Remove();
-        Mill mill = new Mill();
-        boolean z;
         int i,x;
         Mark mark = new Mark();
         while(startingPlayerCountBlue > 0 || startingPlayerCountRed > 0 ){
             System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
             System.out.println("Červeny je na rade");
-            i= sc.nextInt();
-            while(i>24 || i<1 || !mark.exec(i - 1, player1, this)){
-                System.out.println("Zly input, Skus znova");
-                i= sc.nextInt();
+            i= consoleUI.handeInput();
+            while(!mark.exec(i - 1, player1, this)){
+                i= consoleUI.handeInput();
             }
-
-            z = mill.check(i-1,this);
             consoleUI.show();
-            if(z){
+            if(mill.check(i-1,this)){
                 System.out.println("Odstran jedneho z druheho teamu");
-                x= sc.nextInt();
+                x= consoleUI.handeInput();
                 remove.remove(x-1,this,player1);
             }
-
-            //System.out.println(z);
             startingPlayerCountRed--;
             System.out.println("Modry je na rade");
             System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
-            x= sc.nextInt();
-            while(x>24 || x<1 || !mark.exec(x - 1, player2, this)){
-                System.out.println("Zly input, Skus znova");
-                x= sc.nextInt();
+            x= consoleUI.handeInput();
+            while(!mark.exec(x - 1, player2, this)){
+                x= consoleUI.handeInput();
             }
+
             startingPlayerCountBlue--;
-            z = mill.check(x-1,this);
             consoleUI.show();
             //System.out.println(z);
-            if(z){
+            if(mill.check(x-1,this)){
                 System.out.println("Odstran jedneho z druheho teamu");
-                x= sc.nextInt();
+                x= consoleUI.handeInput();
                 remove.remove(x-1,this,player2);
             }
         }
     }
 
     public void movement(){
-        Remove remove = new Remove();
-        Mill mill = new Mill();
+        ConsoleUI consoleUI = new ConsoleUI(this);
         Move move = new Move();
-        boolean z;
         int i,x;
         while((actualPlayerCountRed>2 && actualPlayerCountBlue>2)) {
             System.out.println("Červeny je na rade");
-            System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
-            i = sc.nextInt();
-            System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
-            x = sc.nextInt();
-            while (i > 24 || i < 1 || !move.check(i - 1, x - 1, this, player1)) {
-                System.out.println("Zly input, skus znova");
-                System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
-                i = sc.nextInt();
-                System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
-                x = sc.nextInt();
-            }
-            z = mill.check(x-1,this);
-            //System.out.println(z);
-            if(z){
-                System.out.println("Odstran jedneho z druheho teamu");
-                x= sc.nextInt();
-                remove.remove(x-1,this,player1);
-            }
+            Turn(consoleUI, move, player1);
             if(actualPlayerCountBlue<3) {
-                System.out.println("Cerveny má menej ako tri pozicie! Prehral!");
+                System.out.println("Modry má menej ako tri pozicie! Prehral!");
                 break;
             }
             if((!move.checkIfCanAnyoneMove(this,player2))){
@@ -211,24 +184,7 @@ public class Field {
                 break;
             }
             System.out.println("Modrý je na rade");
-            System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
-            i = sc.nextInt();
-            System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
-            x = sc.nextInt();
-            while (i > 24 || i < 1 || !move.check(i - 1, x - 1, this, player2)) {
-                System.out.println("Zly input, skus znova");
-                System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
-                i = sc.nextInt();
-                System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
-                x = sc.nextInt();
-            }
-            z = mill.check(x-1,this);
-            //System.out.println(z);
-            if(z){
-                System.out.println("Odstran jedneho z druheho teamu");
-                x= sc.nextInt();
-                remove.remove(x-1,this,player2);
-            }
+            Turn(consoleUI, move, player2);
             if(actualPlayerCountRed<3) {
                 System.out.println("Cerveny má menej ako tri pozicie! Prehral!");
                 break;
@@ -239,5 +195,26 @@ public class Field {
             }
         }
 
+    }
+
+    private void Turn(ConsoleUI consoleUI, Move move, Player player2) {
+        int i;
+        int x;
+        System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+        i = consoleUI.handeInput();
+        System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+        x = consoleUI.handeInput();
+        while (!move.check(i - 1, x - 1, this, player2)) {
+            System.out.println("Zly input, skus znova");
+            System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");
+            i = consoleUI.handeInput();
+            System.out.println("Zadaj číslo pozície kam chces svojho panacika pohnut");
+            x = consoleUI.handeInput();
+        }
+        if(mill.check(x-1,this)){
+            System.out.println("Odstran jedneho z druheho teamu");
+            x= consoleUI.handeInput();
+            remove.remove(x-1,this, player2);
+        }
     }
 }

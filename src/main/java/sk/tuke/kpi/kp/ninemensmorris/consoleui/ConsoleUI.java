@@ -6,13 +6,16 @@ import sk.tuke.kpi.kp.ninemensmorris.core.FieldState;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ConsoleUI {
+    private Scanner scanner= new Scanner(System.in);
     private Field field;
     public ConsoleUI(Field field){
     this.field=field;
     }
-
+    private static final Pattern INPUT_PATTERN = Pattern.compile("([0-24])([0-24])");
     public void show(){
         ArrayList<Position> positions = field.getPositions();
         String reset = "\u001B[0m";
@@ -32,22 +35,42 @@ public class ConsoleUI {
     }
     public void play(){
         var playing = FieldState.PLAYING;
-        Scanner sc= new Scanner(System.in);
         while(playing==FieldState.PLAYING) {
             System.out.println("Welcome to Nine Men's Morris");
             field.setUp();
             show();
             field.placement();
             field.movement();
-            char str = 'x';
+            char str = 0;
             while (str!='N' && str!='n' && str!='a' && str!='A'){
                 System.out.println("Do you want to play again? A/N");
-                str = sc.next().charAt(0);
+                str = scanner.next().charAt(0);
                 if(str=='N' || str=='n')
                     playing = FieldState.DONE;
                 else
                     field = new Field();
             }
         }
+    }
+    public int handeInput() {
+        System.out.println("Enter command (X - exit, Position number): ");
+        String line = scanner.nextLine().toUpperCase();
+        if ("X".equals(line)) {
+            System.exit(0);
+        }
+        try {
+            if (Integer.parseInt(line) < 24 || Integer.parseInt(line) > 1) {
+                return Integer.parseInt(line);
+            }
+
+        }
+        catch (Exception e){
+        System.out.println("Wrong input.");
+        return handeInput();
+        }
+
+        System.out.println("Wrong input");
+        return handeInput();
+
     }
 }
