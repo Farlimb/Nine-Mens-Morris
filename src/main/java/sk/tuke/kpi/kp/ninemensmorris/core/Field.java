@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.*;
 public class Field {
     private final ArrayList<Position> positions = new ArrayList<>();
-    private final int endingPos = 23;
-    private Remove remove = new Remove();
-    private Mill mill = new Mill();
+    private final Remove remove = new Remove();
+    private final Mill mill = new Mill();
     private int startingPlayerCountRed = 3;
     private int startingPlayerCountBlue = 3;
     private int actualPlayerCountRed = 3;
@@ -28,15 +27,6 @@ public class Field {
     public ArrayList<Position> getPositions() {
         return positions;
     }
-    public int getEndingPos() {
-        return endingPos;
-    }
-    public int getActualPlayerCountBlue(){
-        return actualPlayerCountBlue;
-    }
-    public int getActualPlayerCountRed(){
-        return actualPlayerCountRed;
-    }
 
     public void minusActualPlayerCountBlue(){
             actualPlayerCountBlue--;
@@ -47,12 +37,13 @@ public class Field {
 
     public void setUp(){
         int startingPos = 0;
-        for (int i = startingPos; i<=endingPos; i++){
+        int endingPos = 23;
+        for (int i = startingPos; i<= endingPos; i++){
             positions.add(new Position());
-            positions.get(i).setId(i);
+            positions.get(i).setId(i);          //zadavanie ideciek pre kazdu poziciu
             positions.get(i).setPlayer(null);
         }
-        positions.get(0).setRight(positions.get(1));
+        positions.get(0).setRight(positions.get(1));  //zadavanie susedov pre konkretne pozicie
         positions.get(0).setDown(positions.get(9));
 
         positions.get(1).setRight(positions.get(2));
@@ -141,11 +132,11 @@ public class Field {
         positions.get(23).setUp(positions.get(14));
     }
 
-    public void placement(){
+    public void placement(){  // Prva faza hry
         ConsoleUI consoleUI = new ConsoleUI(this);
         int i,x;
         Mark mark = new Mark();
-        while(startingPlayerCountBlue > 0 || startingPlayerCountRed > 0 ){
+        while(startingPlayerCountBlue > 0 || startingPlayerCountRed > 0 ){ //check na to ci este maju hraci nejakych zvysnych panacikov
             System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
             System.out.println("Červeny je na rade");
             i= consoleUI.handeInput();
@@ -153,7 +144,7 @@ public class Field {
                 i= consoleUI.handeInput();
             }
             consoleUI.show();
-            if(mill.check(i-1,this)){
+            if(mill.check(i-1,this)){       //check mlynu
                 System.out.println("Odstran jedneho z druheho teamu");
                 x= consoleUI.handeInput();
                 remove.remove(x-1,this,player1);
@@ -162,7 +153,7 @@ public class Field {
             System.out.println("Modry je na rade");
             System.out.println("Zadaj číslo pozície na ktorú chceš uložiť panáčika");
             x= consoleUI.handeInput();
-            while(!mark.exec(x - 1, player2, this)){
+            while(!mark.exec(x - 1, player2, this)){        // oznacovanie pozicie
                 x= consoleUI.handeInput();
             }
 
@@ -206,7 +197,7 @@ public class Field {
 
     }
 
-    private void Turn(ConsoleUI consoleUI, Move move, Player player2) {
+    private void Turn(ConsoleUI consoleUI, Move move, Player player2) { //jeden tah hraca pre movement fazu
         int i;
         int x;
         System.out.println("Zadaj číslo pozície svojho panacika co chces pohnut");

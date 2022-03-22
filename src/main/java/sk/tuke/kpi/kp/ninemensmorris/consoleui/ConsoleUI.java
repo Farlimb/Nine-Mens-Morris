@@ -3,20 +3,24 @@ package sk.tuke.kpi.kp.ninemensmorris.consoleui;
 import sk.tuke.kpi.kp.ninemensmorris.core.Field;
 import sk.tuke.kpi.kp.ninemensmorris.core.Position;
 import sk.tuke.kpi.kp.ninemensmorris.core.FieldState;
+import sk.tuke.kpi.kp.ninemensmorris.entity.Comment;
+import sk.tuke.kpi.kp.ninemensmorris.entity.Rating;
 import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
-import sk.tuke.kpi.kp.ninemensmorris.service.ScoreService;
-import sk.tuke.kpi.kp.ninemensmorris.service.ScoreServiceJBDC;
+import sk.tuke.kpi.kp.ninemensmorris.service.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleUI {
-    private Scanner scanner= new Scanner(System.in);
+    private final Scanner scanner= new Scanner(System.in);
     private Field field;
     public ConsoleUI(Field field){
     this.field=field;
     }
-    private ScoreService scoreService = new ScoreServiceJBDC();
+    private final ScoreService scoreService = new ScoreServiceJDBC();
+    private final CommentService commentService = new CommentServiceJDBC();
+    private final RatingService ratingService = new RatingServiceJDBC();
     public void show(){
         ArrayList<Position> positions = field.getPositions();
         String reset = "\u001B[0m";
@@ -48,21 +52,66 @@ public class ConsoleUI {
             show();
             field.placement();
             field.movement();
-            scoreService.addScore(new Score(name, "nine-mens-morris" , field.getPlayer1().getScore().getPoints()));
-            scoreService.addScore(new Score(name2, "nine-mens-morris" , field.getPlayer2().getScore().getPoints()));
+            scoreService.addScore(new Score(name, "nine-mens-morris" , field.getPlayer1().getScore().getPoints(),new Date()));
+            scoreService.addScore(new Score(name2, "nine-mens-morris" , field.getPlayer2().getScore().getPoints(),new Date()));
+            comment(name);
+            comment(name2);
+            rate(name);
+            rate(name2);
             printTopScores();
-            String str="0";
-            while (!"n".equals(str) && !"N".equals(str) && !"a".equals(str) && !"A".equals(str)){
-                System.out.println("Do you want to play again? A/N");
-                str = scanner.nextLine().toUpperCase();
-                if("N".equals(str)) {
-                    playing = FieldState.DONE;
-                }
-                else
-                    field = new Field();
+            playing = getPlaying(playing);
+
+        }
+    }
+
+    private void rate(String name) {
+        System.out.printf("%s Add rating please from 1-5\n",name);
+        String line = scanner.nextLine();
+        var str = 0;
+        try {
+            if (Integer.parseInt(line) < 6 && Integer.parseInt(line) > 0) {
+                str = Integer.parseInt(line);
+            }
+            else{
+                System.out.println("Wrong input.");
+                rate(name);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Wrong input.");
+            rate(name);
+        }
+        ratingService.setRating(new Rating(name, "nine-mens-morris", str, new Date()));
+    }
+
+    private void comment(String name) {
+        String str="0";
+        while (!"n".equals(str) && !"N".equals(str) && !"a".equals(str) && !"A".equals(str)) {
+            System.out.printf("%s Do you want to add comment? A/N\n",name);
+            str = scanner.nextLine().toUpperCase();
+            if ("A".equals(str)) {
+                System.out.println("Write your comment:");
+                String line = scanner.nextLine();
+                commentService.addComment(new Comment(line, name, "nine-mens-morris", new Date()));
             }
         }
     }
+
+
+    private FieldState getPlaying(FieldState playing) {
+        String str="0";
+        while (!"n".equals(str) && !"N".equals(str) && !"a".equals(str) && !"A".equals(str)){
+            System.out.println("Do you want to play again? A/N");
+            str = scanner.nextLine().toUpperCase();
+            if("N".equals(str)) {
+                playing = FieldState.DONE;
+            }
+            else
+                field = new Field();
+        }
+        return playing;
+    }
+
     public int handeInput() {
         System.out.println("Enter command (X - exit, Position number): ");
         String line = scanner.nextLine().toUpperCase();

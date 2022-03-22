@@ -6,14 +6,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreServiceJBDC implements ScoreService{
+public class ScoreServiceJDBC implements ScoreService{
 
     public static final String JDBC_URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String JBDC_USER = "postgres";
     public static final String JBDC_PASSWORD = "heslo";
-    public static final String SELECT = "SELECT player, game, points FROM score WHERE game = ? ORDER BY points DESC LIMIT 10";
+    public static final String SELECT = "SELECT player, game, points, played_at FROM score WHERE game = ? ORDER BY points DESC LIMIT 10";
     public static final String DELETE = "DELETE FROM score";
-    public static final String INSERT = "INSERT INTO score (player, game, points) VALUES (?, ?, ?)";
+    public static final String INSERT = "INSERT INTO score (player, game, points, played_at) VALUES (?, ?, ?, ?)";
 
     @Override
     public void addScore(Score score) {
@@ -23,6 +23,7 @@ public class ScoreServiceJBDC implements ScoreService{
             statement.setString(1, score.getPlayer());
             statement.setString(2, score.getGame());
             statement.setInt(3, score.getPoints());
+            statement.setTimestamp(4, new Timestamp(score.getDate().getTime()));
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new GamestudioException("Problem inserting score", e);
@@ -38,7 +39,7 @@ public class ScoreServiceJBDC implements ScoreService{
             try (ResultSet rs = statement.executeQuery()) {
                 List<Score> scores = new ArrayList<>();
                 while (rs.next()) {
-                    scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                    scores.add(new Score(rs.getString(1), rs.getString(2), rs.getInt(3),rs.getDate(4)));
                 }
                 return scores;
             }

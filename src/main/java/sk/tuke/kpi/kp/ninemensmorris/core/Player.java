@@ -2,10 +2,12 @@ package sk.tuke.kpi.kp.ninemensmorris.core;
 
 import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
 
+import java.util.Date;
+
 public class Player {
     private Field.Color color = null;
     private String name;
-    private Score score = new Score(name,"nine-mens-morris",0);
+    private final Score score = new Score(name,"nine-mens-morris",0,new Date());
 
     public String getName() {
         return name;
