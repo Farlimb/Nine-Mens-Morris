@@ -11,17 +11,17 @@ public class ScoreServiceJBDC implements ScoreService{
     public static final String JDBC_URL = "jdbc:postgresql://localhost/gamestudio";
     public static final String JBDC_USER = "postgres";
     public static final String JBDC_PASSWORD = "heslo";
-    public static final String SELECT = "SELECT game, player, points FROM score WHERE game = ? ORDER BY points DESC LIMIT 10";
+    public static final String SELECT = "SELECT player, game, points FROM score WHERE game = ? ORDER BY points DESC LIMIT 10";
     public static final String DELETE = "DELETE FROM score";
-    public static final String INSERT = "INSERT INTO score (game, player, points) VALUES (?, ?, ?)";
+    public static final String INSERT = "INSERT INTO score (player, game, points) VALUES (?, ?, ?)";
 
     @Override
     public void addScore(Score score) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, JBDC_USER, JBDC_PASSWORD);
              PreparedStatement statement = connection.prepareStatement(INSERT)
         ) {
-            statement.setString(1, score.getGame());
-            statement.setString(2, score.getPlayer());
+            statement.setString(1, score.getPlayer());
+            statement.setString(2, score.getGame());
             statement.setInt(3, score.getPoints());
             statement.executeUpdate();
         } catch (SQLException e) {

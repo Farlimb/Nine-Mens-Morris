@@ -16,14 +16,14 @@ public class Move {
     }
     private void move(int i, int x,Field field){
         ConsoleUI consoleUI = new ConsoleUI(field);
-        Position positioni = field.getPositions().get(i);
-        Position positionx = field.getPositions().get(x);
+        Position positionI = field.getPositions().get(i);
+        Position positionX = field.getPositions().get(x);
 
-        if(positionx.getPlayer()==null){
-            positionx.setPlayer(positioni.getPlayer());
-            positionx.setColor(positioni.getColor());
-            positioni.setColor("\u001B[0m");
-            positioni.setPlayer(null);
+        if(positionX.getPlayer()==null){
+            positionX.setPlayer(positionI.getPlayer());
+            positionX.setColor(positionI.getColor());
+            positionI.setColor("\u001B[0m");
+            positionI.setPlayer(null);
         }
         consoleUI.show();
     }

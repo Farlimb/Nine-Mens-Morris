@@ -8,12 +8,21 @@ public class Field {
     private final int endingPos = 23;
     private Remove remove = new Remove();
     private Mill mill = new Mill();
-    private int startingPlayerCountRed = 9;
-    private int startingPlayerCountBlue = 9;
-    private int actualPlayerCountRed = 9;
-    private int actualPlayerCountBlue = 9;
+    private int startingPlayerCountRed = 3;
+    private int startingPlayerCountBlue = 3;
+    private int actualPlayerCountRed = 3;
+    private int actualPlayerCountBlue = 3;
     public enum Color {RED, BLUE}
     private final Player player1 = new Player(Field.Color.RED);
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
     private final Player player2 = new Player(Field.Color.BLUE);
 
     public ArrayList<Position> getPositions() {

@@ -1,15 +1,9 @@
 package sk.tuke.kpi.kp.ninemensmorris.entity;
 
-import sk.tuke.kpi.kp.ninemensmorris.core.Player;
-
-import java.util.Date;
 
 public class Score {
     private String player;
-
-
     private String game;
-
     private int points;
 
     public Score(String player, String game, int points) {

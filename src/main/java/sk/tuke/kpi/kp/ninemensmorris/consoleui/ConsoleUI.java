@@ -3,11 +3,12 @@ package sk.tuke.kpi.kp.ninemensmorris.consoleui;
 import sk.tuke.kpi.kp.ninemensmorris.core.Field;
 import sk.tuke.kpi.kp.ninemensmorris.core.Position;
 import sk.tuke.kpi.kp.ninemensmorris.core.FieldState;
+import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
+import sk.tuke.kpi.kp.ninemensmorris.service.ScoreService;
+import sk.tuke.kpi.kp.ninemensmorris.service.ScoreServiceJBDC;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ConsoleUI {
     private Scanner scanner= new Scanner(System.in);
@@ -15,7 +16,7 @@ public class ConsoleUI {
     public ConsoleUI(Field field){
     this.field=field;
     }
-    private static final Pattern INPUT_PATTERN = Pattern.compile("([0-24])([0-24])");
+    private ScoreService scoreService = new ScoreServiceJBDC();
     public void show(){
         ArrayList<Position> positions = field.getPositions();
         String reset = "\u001B[0m";
@@ -37,16 +38,26 @@ public class ConsoleUI {
         var playing = FieldState.PLAYING;
         while(playing==FieldState.PLAYING) {
             System.out.println("Welcome to Nine Men's Morris");
+            System.out.println("Insert name of the first player that will be playing as red");
+            String name = scanner.nextLine();
+            System.out.println("Insert name of the first player that will be playing as blue");
+            String name2 = scanner.nextLine();
+            field.getPlayer1().setName(name);
+            field.getPlayer2().setName(name2);
             field.setUp();
             show();
             field.placement();
             field.movement();
-            char str = 0;
-            while (str!='N' && str!='n' && str!='a' && str!='A'){
+            scoreService.addScore(new Score(name, "nine-mens-morris" , field.getPlayer1().getScore().getPoints()));
+            scoreService.addScore(new Score(name2, "nine-mens-morris" , field.getPlayer2().getScore().getPoints()));
+            printTopScores();
+            String str="0";
+            while (!"n".equals(str) && !"N".equals(str) && !"a".equals(str) && !"A".equals(str)){
                 System.out.println("Do you want to play again? A/N");
-                str = scanner.next().charAt(0);
-                if(str=='N' || str=='n')
+                str = scanner.nextLine().toUpperCase();
+                if("N".equals(str)) {
                     playing = FieldState.DONE;
+                }
                 else
                     field = new Field();
             }
@@ -56,10 +67,11 @@ public class ConsoleUI {
         System.out.println("Enter command (X - exit, Position number): ");
         String line = scanner.nextLine().toUpperCase();
         if ("X".equals(line)) {
+            printTopScores();
             System.exit(0);
         }
         try {
-            if (Integer.parseInt(line) < 24 || Integer.parseInt(line) > 1) {
+            if (Integer.parseInt(line) < 25 && Integer.parseInt(line) > 0) {
                 return Integer.parseInt(line);
             }
 
@@ -72,5 +84,12 @@ public class ConsoleUI {
         System.out.println("Wrong input");
         return handeInput();
 
+    }
+
+    private void printTopScores(){
+        var scores = scoreService.getTopScores("nine-mens-morris");
+        for(Score score : scores) {
+            System.out.printf("%s %d\n", score.getPlayer(), score.getPoints());
+        }
     }
 }

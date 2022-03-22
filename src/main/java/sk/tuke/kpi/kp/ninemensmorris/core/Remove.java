@@ -20,6 +20,8 @@ public class Remove {
                 position.setPlayer(null);
                 position.setColor("\u001B[0m");
                 consoleUI.show();
+                var score = player.getScore().getPoints();
+                player.getScore().setPoints(score+100);
                 if(player.getColor()==RED){
                     field.minusActualPlayerCountBlue();
                 }
