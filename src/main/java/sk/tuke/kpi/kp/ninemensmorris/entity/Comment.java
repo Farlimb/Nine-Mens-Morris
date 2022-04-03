@@ -16,6 +16,7 @@ public class Comment {
     private String game;
     private Date date;
 
+
     public Comment(){}
 
     public Comment(String comment, String player, String game, Date date){

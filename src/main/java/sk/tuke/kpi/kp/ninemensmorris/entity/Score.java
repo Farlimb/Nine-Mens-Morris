@@ -1,53 +1,48 @@
 package sk.tuke.kpi.kp.ninemensmorris.entity;
-import org.hibernate.annotations.NamedQuery;
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import java.util.Date;
 
+@Entity
+@NamedQuery( name = "Score.getTopScores",
+        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+@NamedQuery( name = "Score.resetScores",
+        query = "DELETE FROM Score")
+
 public class Score {
+
     @Id
     @GeneratedValue
     private int ident;
+
     private String player;
+
     private String game;
+
     private int points;
-    private Date date;
 
-    @Entity
-    @NamedQuery( name = "Score.getTopScores",
-            query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
-    @NamedQuery( name = "Score.resetScores",
-            query = "DELETE FROM Score")
-    public Score(){}
+    private Date playedAt;
 
-    public Score(String player, String game, int points, Date date) {
+    public Score() {}
+
+    public Score(String player, String game, int points, Date playedAt) {
+        this.player = player;
         this.game = game;
-        this.player = player;
         this.points = points;
-        this.date=date;
+        this.playedAt = playedAt;
     }
 
-
-
-    public void setPlayer(String player) {
-        this.player = player;
-    }
-
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-
+    public int getIdent() { return ident; }
+    public void setIdent(int ident) { this.ident = ident; }
 
     public String getPlayer() {
         return player;
     }
 
-    public int getPoints() {
-        return points;
+    public void setPlayer(String player) {
+        this.player = player;
     }
 
     public String getGame() {
@@ -57,19 +52,31 @@ public class Score {
     public void setGame(String game) {
         this.game = game;
     }
-    public Date getDate() {
-        return date;
+
+    public int getPoints() {
+        return points;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setPoints(int points) {
+        this.points = points;
     }
 
-    public int getIdent() {
-        return ident;
+    public Date getPlayedAt() {
+        return playedAt;
     }
 
-    public void setIdent(int ident) {
-        this.ident = ident;
+    public void setPlayedAt(Date playedAt) {
+        this.playedAt = playedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Score{" +
+                "ident=" + ident +
+                ", player='" + player + '\'' +
+                ", game='" + game + '\'' +
+                ", points=" + points +
+                ", playedAt=" + playedAt +
+                '}';
     }
 }

@@ -32,7 +32,7 @@ public class RatingServiceJDBC implements RatingService{
     @Override
     public int getAverageRating(String game) {
         try (var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-             var statement = connection.prepareStatement(SELECT);
+             var statement = connection.prepareStatement(SELECT)
         ){
             statement.setString(1,game);
             try(var rs = statement.executeQuery()) {
@@ -60,7 +60,7 @@ public class RatingServiceJDBC implements RatingService{
     public int getRating(String game, String player) {
         try (var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
              var statement = connection.prepareStatement(SELECT);
-             var statement1 = connection.prepareStatement(SELECT);
+             var statement1 = connection.prepareStatement(SELECT)
         ){
             statement.setString(1,game);
             statement1.setString(1,player);
@@ -87,7 +87,7 @@ public class RatingServiceJDBC implements RatingService{
     public void reset() {
         try (
                 var connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-                var statement = connection.createStatement();
+                var statement = connection.createStatement()
         ) {
             statement.executeUpdate(DELETE);
 

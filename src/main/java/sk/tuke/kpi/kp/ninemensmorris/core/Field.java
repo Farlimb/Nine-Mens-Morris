@@ -7,10 +7,10 @@ public class Field {
     private final ArrayList<Position> positions = new ArrayList<>();
     private final Remove remove = new Remove();
     private final Mill mill = new Mill();
-    private int startingPlayerCountRed = 3;
-    private int startingPlayerCountBlue = 3;
-    private int actualPlayerCountRed = 3;
-    private int actualPlayerCountBlue = 3;
+    private int startingPlayerCountRed = 4;
+    private int startingPlayerCountBlue = 4;
+    private int actualPlayerCountRed = 4;
+    private int actualPlayerCountBlue = 4;
     public enum Color {RED, BLUE}
     private final Player player1 = new Player(Field.Color.RED);
 

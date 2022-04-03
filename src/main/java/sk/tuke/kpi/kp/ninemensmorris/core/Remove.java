@@ -13,7 +13,7 @@ public class Remove {
             if(position.getPlayer()==player || position.getPlayer()==null){   //check ci je ta pozicia nepriatelova
                 System.out.println("Nezadal si nepriatelov domcek! Skús znova");
                 Scanner sc= new Scanner(System.in);
-                i = sc.nextInt();
+                i = consoleUI.handeInput();
                 remove(i-1,field,player);
             }
             else {

@@ -22,10 +22,9 @@ public class ScoreServiceJDBCTest {
     @Test
     public void addScoreTest(){
         scoreService.reset();
-        scoreService.addScore(new Score("bla", "nine-mens-morris", 100, new Date()));
+        scoreService.addScore(new Score("Test", "nine-mens-morris", 100, new Date()));
         var scores = scoreService.getTopScores("nine-mens-morris");
         assertFalse(scores.isEmpty());
-
     }
     @Test
     public void getTopScoreTest(){
