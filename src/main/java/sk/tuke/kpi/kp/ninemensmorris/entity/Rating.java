@@ -1,8 +1,15 @@
 package sk.tuke.kpi.kp.ninemensmorris.entity;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.GeneratedValue;
 import java.util.Date;
 
 public class Rating {
+    @Id
+    @GeneratedValue
+    private int ident;
+
     private String game;
     private String player;
     private int rating;
@@ -18,6 +25,7 @@ public class Rating {
                 '}';
     }
 
+
     public Rating(String player,String game, int rating, Date ratedAt) {
         this.game = game;
         this.player = player;
@@ -25,7 +33,16 @@ public class Rating {
         this.ratedAt = ratedAt;
     }
 
+    public Rating(){
 
+    }
+    public int getIdent() {
+        return ident;
+    }
+
+    public void setIdent(int ident) {
+        this.ident = ident;
+    }
 
     public String getGame() {
         return game;

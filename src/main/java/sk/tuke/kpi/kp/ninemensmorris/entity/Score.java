@@ -1,11 +1,26 @@
 package sk.tuke.kpi.kp.ninemensmorris.entity;
+import org.hibernate.annotations.NamedQuery;
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import java.util.Date;
 
 public class Score {
+    @Id
+    @GeneratedValue
+    private int ident;
     private String player;
     private String game;
     private int points;
     private Date date;
+
+    @Entity
+    @NamedQuery( name = "Score.getTopScores",
+            query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+    @NamedQuery( name = "Score.resetScores",
+            query = "DELETE FROM Score")
+    public Score(){}
 
     public Score(String player, String game, int points, Date date) {
         this.game = game;
@@ -13,6 +28,7 @@ public class Score {
         this.points = points;
         this.date=date;
     }
+
 
 
     public void setPlayer(String player) {
@@ -49,4 +65,11 @@ public class Score {
         this.date = date;
     }
 
+    public int getIdent() {
+        return ident;
+    }
+
+    public void setIdent(int ident) {
+        this.ident = ident;
+    }
 }
