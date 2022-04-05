@@ -1,28 +1,31 @@
 package sk.tuke.kpi.kp.ninemensmorris.service;
-import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
+import sk.tuke.kpi.kp.ninemensmorris.entity.Comment;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
-@Transactional
-public class ScoreServiceJPA implements ScoreService {
 
+
+@Transactional
+
+public class CommentServiceJPA implements CommentService {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Override
-    public void addScore(Score score){
-        entityManager.persist(score);
+    public void addComment(Comment comment) {
+        entityManager.persist(comment);
     }
 
     @Override
-    public List getTopScores(String game){
-        return entityManager.createNamedQuery("Score.getTopScores")
+    public List<Comment> getComments(String game) {
+        return entityManager.createNamedQuery("Comment.getComments")
                 .setParameter("nine_mens_morris", game).setMaxResults(10).getResultList();
     }
 
     @Override
     public void reset() {
-        entityManager.createNamedQuery("Score.resetScores").executeUpdate();
+        entityManager.createNamedQuery("Comment.resetComment").executeUpdate();
     }
 }

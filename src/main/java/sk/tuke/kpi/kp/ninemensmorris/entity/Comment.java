@@ -1,12 +1,15 @@
 package sk.tuke.kpi.kp.ninemensmorris.entity;
-
-import org.hibernate.annotations.NamedQuery;
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import java.util.Date;
 
+@Entity
+@NamedQuery( name = "Comment.getComments",
+        query = "SELECT s FROM Comment s WHERE s.game=:nine_mens_morris")
+@NamedQuery( name = "Comment.resetComment",
+        query = "DELETE FROM Comment ")
 public class Comment {
     @Id
     @GeneratedValue

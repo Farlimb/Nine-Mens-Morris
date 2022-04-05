@@ -7,12 +7,11 @@ import java.util.Date;
 
 @Entity
 @NamedQuery( name = "Score.getTopScores",
-        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+        query = "SELECT g FROM Score g WHERE g.game=:nine_mens_morris ORDER BY g.points DESC")
 @NamedQuery( name = "Score.resetScores",
         query = "DELETE FROM Score")
 
 public class Score {
-
     @Id
     @GeneratedValue
     private int ident;

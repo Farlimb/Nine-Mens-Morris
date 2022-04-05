@@ -1,5 +1,5 @@
 package sk.tuke.kpi.kp.ninemensmorris.consoleui;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import sk.tuke.kpi.kp.ninemensmorris.core.Field;
 import sk.tuke.kpi.kp.ninemensmorris.core.Position;
 import sk.tuke.kpi.kp.ninemensmorris.core.FieldState;
@@ -13,14 +13,21 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleUI {
+    @Autowired
+    private ScoreService scoreService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
     private final Scanner scanner= new Scanner(System.in);
     private Field field;
     public ConsoleUI(Field field){
     this.field=field;
     }
-    private final ScoreService scoreService = new ScoreServiceJDBC();
-    private final CommentService commentService = new CommentServiceJDBC();
-    private final RatingService ratingService = new RatingServiceJDBC();
+
+    //private final ScoreService scoreService = new ScoreServiceJDBC();
+    //private final CommentService commentService = new CommentServiceJDBC();
+    //private final RatingService ratingService = new RatingServiceJDBC();
     public void show(){
         ArrayList<Position> positions = field.getPositions();
         String reset = "\u001B[0m";
@@ -39,6 +46,8 @@ public class ConsoleUI {
         System.out.println(positions.get(21).getColor()+"22"+ reset +"-----------"+positions.get(22).getColor()+"23"+ reset +"-----------"+positions.get(23).getColor()+"24"+ reset);
     }
     public void play(){
+        System.out.println(ratingService.getAverageRating("nine_mens_morris"));
+       // System.out.printf("%s",commentService.getComments("nine_mens_morris").get(1).getComment());
         var playing = FieldState.PLAYING;
         while(playing==FieldState.PLAYING) {
             System.out.println("Welcome to Nine Men's Morris");
@@ -52,12 +61,14 @@ public class ConsoleUI {
             show();
             field.placement();
             field.movement();
-            scoreService.addScore(new Score(name, "nine-mens-morris" , field.getPlayer1().getScore().getPoints(),new Date()));
-            scoreService.addScore(new Score(name2, "nine-mens-morris" , field.getPlayer2().getScore().getPoints(),new Date()));
+            scoreService.addScore(new Score(name, "nine_mens_morris" , field.getPlayer1().getScore().getPoints(),new Date()));
+            scoreService.addScore(new Score(name2, "nine_mens_morris" , field.getPlayer2().getScore().getPoints(),new Date()));
             comment(name);
             comment(name2);
             rate(name);
             rate(name2);
+            //var hovno= ratingService.getRating("nine_mens_morris","red");
+            //System.out.printf("%s",hovno);
             printTopScores();
             playing = getPlaying(playing);
 
@@ -81,7 +92,7 @@ public class ConsoleUI {
             System.out.println("Wrong input.");
             rate(name);
         }
-        ratingService.setRating(new Rating(name, "nine-mens-morris", str, new Date()));
+        ratingService.setRating(new Rating(name, "nine_mens_morris", str, new Date()));
     }
 
     private void comment(String name) {
@@ -92,7 +103,7 @@ public class ConsoleUI {
             if ("A".equals(str)) {
                 System.out.println("Write your comment:");
                 String line = scanner.nextLine();
-                commentService.addComment(new Comment(line, name, "nine-mens-morris", new Date()));
+                commentService.addComment(new Comment(line, name, "nine_mens_morris", new Date()));
             }
         }
     }
@@ -136,7 +147,7 @@ public class ConsoleUI {
     }
 
     private void printTopScores(){
-        var scores = scoreService.getTopScores("nine-mens-morris");
+        var scores = scoreService.getTopScores("nine_mens_morris");
         for(int i = 0; i < scores.size();i++) {
             var score = scores.get(i);
             System.out.printf("%d. %s %d\n",i+1,score.getPlayer(), score.getPoints());
