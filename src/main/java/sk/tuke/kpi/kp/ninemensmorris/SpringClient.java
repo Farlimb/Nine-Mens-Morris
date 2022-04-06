@@ -5,17 +5,23 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.web.client.RestTemplate;
 import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
 import sk.tuke.kpi.kp.ninemensmorris.core.Field;
+import sk.tuke.kpi.kp.ninemensmorris.server.GameStudioServer;
 import sk.tuke.kpi.kp.ninemensmorris.service.*;
 
 @SpringBootApplication
 @Configuration
+@ComponentScan(excludeFilters = @ComponentScan.Filter(type = FilterType.REGEX,
+        pattern = "sk.tuke.kpi.kp.ninemensmorris.server.*"))
 public class SpringClient {
-
     public static void main(String[] args) {
-        new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
+        //SpringApplication.run(SpringClient.class);
+        SpringApplication.run(GameStudioServer.class, args);
     }
     @Bean
     public Field field() {
@@ -32,7 +38,7 @@ public class SpringClient {
 
     @Bean
     public ScoreService scoreService() {
-        return new ScoreServiceJPA();
+        return new ScoreServiceRestClient();
     }
     @Bean
     public RatingService ratingService() {
@@ -42,4 +48,9 @@ public class SpringClient {
     public CommentService commentService() {
         return new CommentServiceJPA();
     }
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
 }
