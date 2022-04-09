@@ -20,8 +20,8 @@ import sk.tuke.kpi.kp.ninemensmorris.service.*;
         pattern = "sk.tuke.kpi.kp.ninemensmorris.server.*"))
 public class SpringClient {
     public static void main(String[] args) {
-        //SpringApplication.run(SpringClient.class);
-        SpringApplication.run(GameStudioServer.class, args);
+        SpringApplication.run(SpringClient.class);
+        //SpringApplication.run(GameStudioServer.class, args);
     }
     @Bean
     public Field field() {

@@ -18,14 +18,8 @@ public class RatingServiceJPA implements RatingService{
 
     @Override
     public int getAverageRating(String game) {
-        var variable = entityManager.createNamedQuery("Rating.getAverageRating").setParameter("nine_mens_morris",game).getResultList();
-        double x=0;
-        int i=0;
-        for(i = 0; i < variable.size();i++) {
-            var score = variable.get(i);
-            x= x+(int)score;
-        }
-        return (int)Math.round(x/i);
+        double variable = (double) entityManager.createNamedQuery("Rating.getAverageRating").setParameter("nine_mens_morris", game).getSingleResult();
+        return (int)Math.round(variable);
     }
 
     @Override

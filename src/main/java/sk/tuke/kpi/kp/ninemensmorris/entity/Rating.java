@@ -9,7 +9,7 @@ import java.util.Date;
 @NamedQuery( name = "Rating.getRating",
         query = "SELECT r.rating FROM Rating r WHERE r.player=:player AND r.game=:nine_mens_morris ORDER BY r.rating DESC")
 @NamedQuery( name = "Rating.getAverageRating",
-        query = "SELECT ra.rating FROM Rating ra WHERE ra.game=:nine_mens_morris ORDER BY ra.rating DESC")
+        query = "SELECT AVG(rating.rating) FROM Rating rating WHERE rating.game=:nine_mens_morris")
 @NamedQuery( name = "Rating.resetRating",
         query = "DELETE FROM Rating ")
 
