@@ -46,8 +46,6 @@ public class ConsoleUI {
         System.out.println(positions.get(21).getColor()+"22"+ reset +"-----------"+positions.get(22).getColor()+"23"+ reset +"-----------"+positions.get(23).getColor()+"24"+ reset);
     }
     public void play(){
-        System.out.println(ratingService.getAverageRating("nine_mens_morris"));
-       // System.out.printf("%s",commentService.getComments("nine_mens_morris").get(1).getComment());
         var playing = FieldState.PLAYING;
         while(playing==FieldState.PLAYING) {
             System.out.println("Welcome to Nine Men's Morris");

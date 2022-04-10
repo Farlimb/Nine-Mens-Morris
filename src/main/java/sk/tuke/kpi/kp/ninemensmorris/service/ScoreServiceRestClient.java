@@ -1,5 +1,4 @@
 package sk.tuke.kpi.kp.ninemensmorris.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
@@ -12,7 +11,6 @@ public class ScoreServiceRestClient implements ScoreService {
 
     @Autowired
     private RestTemplate restTemplate;
-    //private RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public void addScore(Score score) {

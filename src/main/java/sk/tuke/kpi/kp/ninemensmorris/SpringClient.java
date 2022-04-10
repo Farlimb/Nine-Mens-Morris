@@ -1,6 +1,5 @@
 package sk.tuke.kpi.kp.ninemensmorris;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -11,7 +10,6 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.web.client.RestTemplate;
 import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
 import sk.tuke.kpi.kp.ninemensmorris.core.Field;
-import sk.tuke.kpi.kp.ninemensmorris.server.GameStudioServer;
 import sk.tuke.kpi.kp.ninemensmorris.service.*;
 
 @SpringBootApplication
@@ -20,8 +18,7 @@ import sk.tuke.kpi.kp.ninemensmorris.service.*;
         pattern = "sk.tuke.kpi.kp.ninemensmorris.server.*"))
 public class SpringClient {
     public static void main(String[] args) {
-        SpringApplication.run(SpringClient.class);
-        //SpringApplication.run(GameStudioServer.class, args);
+        new SpringApplicationBuilder(SpringClient.class).web(WebApplicationType.NONE).run(args);
     }
     @Bean
     public Field field() {
@@ -42,11 +39,11 @@ public class SpringClient {
     }
     @Bean
     public RatingService ratingService() {
-        return new RatingServiceJPA();
+        return new RatingServiceRestClient();
     }
     @Bean
     public CommentService commentService() {
-        return new CommentServiceJPA();
+        return new CommentServiceRestClient();
     }
     @Bean
     public RestTemplate restTemplate() {
