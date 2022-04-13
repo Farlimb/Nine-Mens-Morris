@@ -13,12 +13,14 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleUI {
+
     @Autowired
     private ScoreService scoreService;
     @Autowired
     private CommentService commentService;
     @Autowired
     private RatingService ratingService;
+
     private final Scanner scanner= new Scanner(System.in);
     private Field field;
     public ConsoleUI(Field field){
@@ -48,6 +50,10 @@ public class ConsoleUI {
     public void play(){
         var playing = FieldState.PLAYING;
         while(playing==FieldState.PLAYING) {
+            System.out.print("Average rating of nine-mens-morris: ");
+            System.out.println(ratingService.getAverageRating("nine_mens_morris"));
+            printComments();
+            printTopScores();
             System.out.println("Welcome to Nine Men's Morris");
             System.out.println("Insert name of the first player that will be playing as red");
             String name = scanner.nextLine();
@@ -151,4 +157,13 @@ public class ConsoleUI {
             System.out.printf("%d. %s %d\n",i+1,score.getPlayer(), score.getPoints());
         }
     }
+    private void printComments(){
+        var comments = commentService.getComments("nine_mens_morris");
+        for(int i = 0; i < comments.size();i++) {
+            var comment = comments.get(i);
+            System.out.printf("%d. %s %s\n",i+1,comment.getPlayer(), comment.getComment());
+        }
+    }
+
+
 }

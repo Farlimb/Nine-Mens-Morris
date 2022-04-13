@@ -17,16 +17,12 @@ public class RatingServiceRestClient implements RatingService{
 
    @Override
     public int getAverageRating(String game) {
-        var x = restTemplate.getForEntity(url + "/" + game, String.class).getBody();
-       assert x != null;
-       return Integer.parseInt(x);
+        return restTemplate.getForEntity(url + "/" + game, Integer.class).getBody();
     }
 
     @Override
     public int getRating(String game, String player) {
-        var x = restTemplate.getForEntity(url + "/"+game+"/"+player, String.class).getBody();
-        assert x != null;
-        return Integer.parseInt(x);
+        return restTemplate.getForEntity(url + "/"+game+"/"+player, Integer.class).getBody();
     }
 
     @Override
