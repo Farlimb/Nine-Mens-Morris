@@ -8,7 +8,7 @@ function Kusnir_Nine_Mens_morris(){
     const handleTileAction = (id, player, serviceAction) => {
         console.log(id);
         console.log(field?.player1.color);
-            serviceAction(id,encodeURIComponent(field?.player1.color)).then(response => {
+            serviceAction(id,field?.player1.color).then(response => {
                 setField(response.data);
                 console.log("MarkPos");
             });
