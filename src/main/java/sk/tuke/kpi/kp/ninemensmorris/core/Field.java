@@ -1,18 +1,132 @@
 package sk.tuke.kpi.kp.ninemensmorris.core;
 import sk.tuke.kpi.kp.ninemensmorris.consoleui.ConsoleUI;
-
 import java.util.ArrayList;
-import java.util.*;
-public class Field {
+
+public class Field{
     private final ArrayList<Position> positions = new ArrayList<>();
     private final Remove remove = new Remove();
     private final Mill mill = new Mill();
-    private int startingPlayerCountRed = 4;
-    private int startingPlayerCountBlue = 4;
-    private int actualPlayerCountRed = 4;
-    private int actualPlayerCountBlue = 4;
+    private int startingPlayerCountRed = 9;
+    private int startingPlayerCountBlue = 9;
+    private int actualPlayerCountRed = 9;
+    private int actualPlayerCountBlue = 9;
     public enum Color {RED, BLUE}
-    private final Player player1 = new Player(Field.Color.RED);
+    private  Player player1 = new Player("RED");
+    private  Player player2 = new Player("BLUE");
+    private Player playerOnTurn = player1;
+    private FieldState state = FieldState.PLAYING;
+
+
+    public Field(){
+        setUp();
+        /*int startingPos = 0;
+        int endingPos = 23;
+        for (int i = startingPos; i<= endingPos; i++){
+            positions.add(new Position());
+            positions.get(i).setId(i);          //zadavanie ideciek pre kazdu poziciu
+            positions.get(i).setPlayer(null);
+        }
+        positions.get(0).setRightt(1);  //zadavanie susedov pre konkretne pozicie
+        positions.get(0).setDownn(9);
+
+        positions.get(1).setRightt(2);
+        positions.get(1).setLeftt(0);
+        positions.get(1).setDownn(4);
+
+        positions.get(2).setLeftt(1);
+        positions.get(2).setDownn(14);
+
+        positions.get(3).setRightt(4);
+        positions.get(3).setDownn(10);
+
+        positions.get(4).setLeftt(3);
+        positions.get(4).setRightt(5);
+        positions.get(4).setUpp(1);
+        positions.get(4).setDownn(7);
+
+        positions.get(5).setLeftt(4);
+        positions.get(5).setDownn(13);
+
+        positions.get(6).setRightt(7);
+        positions.get(6).setDownn(11);
+
+        positions.get(7).setLeftt(6);
+        positions.get(7).setRightt(8);
+        positions.get(7).setUpp(4);
+
+        positions.get(8).setLeftt(7);
+        positions.get(8).setDownn(12);
+
+        positions.get(9).setRightt(10);
+        positions.get(9).setUpp(0);
+        positions.get(9).setDownn(21);
+
+        positions.get(10).setRightt(11);
+        positions.get(10).setLeftt(9);
+        positions.get(10).setUpp(3);
+        positions.get(10).setDownn(18);
+
+        positions.get(11).setLeftt(10);
+        positions.get(11).setUpp(6);
+        positions.get(11).setDownn(15);
+
+        positions.get(12).setRightt(13);
+        positions.get(12).setUpp(8);
+        positions.get(12).setDownn(17);
+
+        positions.get(13).setRightt(14);
+        positions.get(13).setLeftt(12);
+        positions.get(13).setUpp(5);
+        positions.get(13).setDownn(20);
+
+        positions.get(14).setLeftt(13);
+        positions.get(14).setUpp(2);
+        positions.get(14).setDownn(23);
+
+        positions.get(15).setRightt(16);
+        positions.get(15).setUpp(11);
+
+        positions.get(16).setLeftt(15);
+        positions.get(16).setRightt(17);
+        positions.get(16).setDownn(19);
+
+        positions.get(17).setLeftt(16);
+        positions.get(17).setUpp(12);
+
+        positions.get(18).setRightt(19);
+        positions.get(18).setUpp(10);
+
+        positions.get(19).setRightt(20);
+        positions.get(19).setLeftt(18);
+        positions.get(19).setUpp(16);
+        positions.get(19).setDownn(22);
+
+        positions.get(20).setLeftt(19);
+        positions.get(20).setUpp(23);
+
+        positions.get(21).setRightt(22);
+        positions.get(21).setUpp(9);
+
+        positions.get(22).setRightt(23);
+        positions.get(22).setLeftt(21);
+        positions.get(22).setUpp(19);
+
+        positions.get(23).setLeftt(22);
+        positions.get(23).setUpp(14);*/
+    }
+
+    public Player getPlayerOnTurn() {
+        return playerOnTurn;
+    }
+
+    public void setPlayerOnTurn(Player playerOnTurn) {
+        this.playerOnTurn = playerOnTurn;
+    }
+
+    public FieldState getState() {
+        return state;
+    }
+
 
     public Player getPlayer1() {
         return player1;
@@ -22,7 +136,6 @@ public class Field {
         return player2;
     }
 
-    private final Player player2 = new Player(Field.Color.BLUE);
 
     public ArrayList<Position> getPositions() {
         return positions;
@@ -167,6 +280,7 @@ public class Field {
             }
         }
     }
+
 
     public void movement(){
         ConsoleUI consoleUI = new ConsoleUI(this);

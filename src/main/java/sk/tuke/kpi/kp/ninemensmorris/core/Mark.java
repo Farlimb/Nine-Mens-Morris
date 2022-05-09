@@ -10,7 +10,7 @@ public class Mark {
             return false;
         }
         positions.get(i).setPlayer(player);         //zadanie hraca
-        if(player.getColor()== Field.Color.RED) { //check akej farby je
+        if(player.getColor()== "RED") { //check akej farby je
             positions.get(i).setColor("\u001B[31m");    // color set pre pozicu
         }
         else{

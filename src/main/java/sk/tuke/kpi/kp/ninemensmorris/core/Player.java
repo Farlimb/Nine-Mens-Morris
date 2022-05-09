@@ -5,7 +5,7 @@ import sk.tuke.kpi.kp.ninemensmorris.entity.Score;
 import java.util.Date;
 
 public class Player {
-    private Field.Color color = null;
+    private String color = null;
     private String name;
     private final Score score = new Score(name,"nine-mens-morris",0,new Date());
 
@@ -20,11 +20,11 @@ public class Player {
         return score;
     }
 
-    public Player(Field.Color color){
+    public Player(String color){
         this.color=color;
     }
 
-    public Field.Color getColor(){
+    public String getColor(){
         return color;
     }
 }

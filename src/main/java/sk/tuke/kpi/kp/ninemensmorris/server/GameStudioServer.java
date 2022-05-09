@@ -9,6 +9,7 @@ import sk.tuke.kpi.kp.ninemensmorris.service.*;
 @SpringBootApplication
 @Configuration
 @EntityScan("sk.tuke.kpi.kp.ninemensmorris.entity")
+
 public class GameStudioServer {
     public static void main(String[] args) {
         SpringApplication.run(GameStudioServer.class, args);
@@ -28,4 +29,5 @@ public class GameStudioServer {
     public RatingService ratingService() {
         return new RatingServiceJPA();
     }
+
 }

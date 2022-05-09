@@ -22,7 +22,7 @@ public class Remove {
                 consoleUI.show();
                 var score = player.getScore().getPoints();
                 player.getScore().setPoints(score+100);   //pridavanie skore
-                if(player.getColor()==RED){       //check ze koho to je a potom zoberie druhemu hracovi z celkoveho poctu
+                if(player.getColor()=="RED"){       //check ze koho to je a potom zoberie druhemu hracovi z celkoveho poctu
                     field.minusActualPlayerCountBlue();
                 }
                 else

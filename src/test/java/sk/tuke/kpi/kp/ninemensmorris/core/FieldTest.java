@@ -12,11 +12,10 @@ class FieldTest {
     private Random randomGenerator = new Random();
     private int z=0;
     private int x=0;
-    private Player player = new Player(Field.Color.RED);
+    private Player player = new Player("RED");
 
     public FieldTest(){
         this.field=new Field();
-        field.setUp();
         Position position = field.getPositions().get(randomGenerator.nextInt(24));
         position.setColor("RED");
         position.setPlayer(player);
@@ -38,7 +37,6 @@ class FieldTest {
     @Test
     public void checkIfCanMove(){
         Field field1 = new Field();
-        field1.setUp();
         Move move = new Move();
         Position position1 = field.getPositions().get(20);
         Position position2 = field.getPositions().get(23);
@@ -46,7 +44,7 @@ class FieldTest {
         Position position4 = field.getPositions().get(19);
         Position position5 = field.getPositions().get(17);
         position1.setPlayer(player);
-        Player player2 = new Player(Field.Color.BLUE);
+        Player player2 = new Player("BLUE");
         position2.setPlayer(player2);
         position3.setPlayer(player2);
         position4.setPlayer(player2);
