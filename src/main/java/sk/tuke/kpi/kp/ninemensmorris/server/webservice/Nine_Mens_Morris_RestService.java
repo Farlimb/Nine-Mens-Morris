@@ -24,11 +24,11 @@ public class Nine_Mens_Morris_RestService {
     }
 
     @GetMapping("/markPos")
-    public Field markPos(@RequestParam int position, @RequestParam String color){
-        System.out.println(color);
+    public Field markPos(@RequestParam int position, @RequestParam String string){
+        System.out.println(string);
         System.out.println("aaaaaaaaa");
         if(mark.exec(position, field.getPlayer1(), field)){
-            if(Objects.equals(color, "RED"))
+            if(Objects.equals(string, "RED"))
             field.setPlayerOnTurn(field.getPlayer2());
         }
         return field;
