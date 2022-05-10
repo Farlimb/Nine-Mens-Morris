@@ -7,10 +7,10 @@ function Kusnir_Nine_Mens_morris(){
 
     const handleTileAction = (id, player, serviceAction) => {
         console.log(id);
-        console.log(field?.player1.color);
-            serviceAction(id,field?.player1.color).then(response => {
+        console.log("MarkPos");
+            serviceAction(id,field?.playerOnTurn.color).then(response => {
                 setField(response.data);
-                console.log("MarkPos");
+                console.log("remove");
             });
     }
 
@@ -25,13 +25,14 @@ function Kusnir_Nine_Mens_morris(){
         <div>
             <div>
             <h1>Nine mens morris React</h1>
-                <h1>Player: {field?.player1.color}</h1>
+                <h1>Player: {field?.playerOnTurn.color}</h1>
             <h3>State: {field?.state}</h3>
             </div>
             {field &&
                 <Field positions={field.positions}
                        field={field}
-                onMarkPos={(id) => handleTileAction(id,field?.playerOnTurn, fieldService.markPos)}/>
+                       onMarkPos={(id) => handleTileAction(id,field?.playerOnTurn, fieldService.markPos)}
+                       onRemovePos={(id) => handleTileAction(id,field?.playerOnTurn, fieldService.removePos)}/>
             }
         </div>
     )

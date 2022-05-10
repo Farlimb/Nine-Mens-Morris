@@ -1,19 +1,31 @@
 import './Kusnir_Nine_Mens_morris.css'
-function Position({position,onMarkPos}){
+function Position({position,onMarkPos,onRemovePos}){
+
     let positionClass;
-    if("null".localeCompare(position?.player)===0){
-        positionClass = position.color === undefined
+    if("RED".localeCompare(position.player?.color)) {
+        positionClass = position.player?.color === undefined ? 'start' : 'BLUE'
+    }
+    else {
+        positionClass = 'RED'
     }
 
     const handleClick = () => {
-        if(!position.player) {
-            onMarkPos(position.id);
-        }
+        console.log("aaaaaa");
+        onMarkPos(position.id);
+    }
+    const handleRightClick = (event) => {
+        console.log("REMOVE")
+        event.preventDefault();
+            onRemovePos(position.id);
     }
 
+
     return (
-        <td
-        onClick={event => handleClick()}>{position.id}</td>
+        <td className={positionClass}
+            onClick={handleClick}
+            onContextMenu={handleRightClick}
+                >{position.id}</td>
     )
 }
+
 export default Position;
