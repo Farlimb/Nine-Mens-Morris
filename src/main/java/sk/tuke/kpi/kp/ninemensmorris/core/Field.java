@@ -16,6 +16,33 @@ public class Field{
     private Player playerOnTurn = player1;
     private FieldState state = FieldState.PLAYING;
 
+    public int getStartingPlayerCountRed() {
+        return startingPlayerCountRed;
+    }
+
+    public void setState(FieldState state) {
+        this.state = state;
+    }
+
+    public void setStartingPlayerCountRed(int startingPlayerCountRed) {
+        this.startingPlayerCountRed = startingPlayerCountRed;
+    }
+
+    public int getStartingPlayerCountBlue() {
+        return startingPlayerCountBlue;
+    }
+
+    public void setStartingPlayerCountBlue(int startingPlayerCountBlue) {
+        this.startingPlayerCountBlue = startingPlayerCountBlue;
+    }
+
+    public int getActualPlayerCountRed() {
+        return actualPlayerCountRed;
+    }
+
+    public int getActualPlayerCountBlue() {
+        return actualPlayerCountBlue;
+    }
 
     public Field(){
         setUp();
