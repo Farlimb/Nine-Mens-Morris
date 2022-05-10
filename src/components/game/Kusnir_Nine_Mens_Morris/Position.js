@@ -22,9 +22,9 @@ function Position({position,onMarkPos,onRemovePos}){
 
     return (
         <td className={positionClass}
-            onClick={handleClick}
-            onContextMenu={handleRightClick}
-                >{position.id}</td>
+    onClick={handleClick}
+    onContextMenu={handleRightClick}
+    />
     )
 }
 

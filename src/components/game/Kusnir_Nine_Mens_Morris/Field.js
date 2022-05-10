@@ -4,7 +4,7 @@ import "./Kusnir_Nine_Mens_morris.css"
 function Field({positions,onMarkPos,onRemovePos}) {
     console.log("ESKEREEEEEEEE");
     return (
-        <table>
+        <table align="center">
             <tbody>
                         <tr><Position key={`position-${positions[0]}`}
                                       onMarkPos={(x) => onMarkPos(x)}

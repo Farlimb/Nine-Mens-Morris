@@ -1,25 +1,25 @@
 import {Button, Form} from "react-bootstrap";
 import { useForm } from "react-hook-form";
-function CommentForm({game,player, onSendComment}){
+function RatingForm({onSendRating}){
     const {register, handleSubmit, formState: { errors } } = useForm({mode: "onChange"});
     const onSubmit = data => {
-        onSendComment(data.comment);
+        onSendRating(data.rating);
     }
 
     return(
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Comment:</Form.Label>
+                <Form.Label>Rating:</Form.Label>
                 <input className="form-control"
                        type="text"
-                       {...register("comment", {
-                           minLength: {value: 3, message: "Minimum is 3 characters."},
-                           maxLength: {value: 150, message: "Maximum is 150 characters."},
-                           required: {value: true, message: "Comment message is required."},
+                       {...register("rating", {
+                           minLength: {value: 1, message: "Minimum is 1."},
+                           maxLength: {value: 1, message: "Maximum is 1."},
+                           required: {value: true, message: "Rating is required."},
                        })}
-                       placeholder="Enter your comment message here" />
+                       placeholder="Enter your rating here" />
                 <Form.Text style={{color: 'red', float: 'right'}}>
-                    {errors.comment?.message}
+                    {errors.rating?.message}
                 </Form.Text>
             </Form.Group>
             <Button type="submit">Send</Button>
@@ -27,4 +27,4 @@ function CommentForm({game,player, onSendComment}){
     );
 }
 
-export default CommentForm;
+export default RatingForm;

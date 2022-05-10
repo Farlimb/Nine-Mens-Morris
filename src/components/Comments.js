@@ -1,7 +1,7 @@
 import {Table} from "react-bootstrap";
-function Comments({comments}){
-    return(
-        <Table striped bordered hover>
+function Comments({comments}) {
+    return (
+        <table className="comments">
             <thead>
             <tr>
                 <th>Player</th>
@@ -10,16 +10,15 @@ function Comments({comments}){
             </tr>
             </thead>
             <tbody>
-            {comments.map(comment =>(
+            {comments.map(comment => (
                 <tr key={`comment-${comment.ident}`}>
                     <td>{comment.player}</td>
                     <td>{comment.comment}</td>
                     <td>{new Date(comment.date).toLocaleString()}</td>
                 </tr>
             ))}
-
             </tbody>
-        </Table>
+        </table>
     );
 }
 
