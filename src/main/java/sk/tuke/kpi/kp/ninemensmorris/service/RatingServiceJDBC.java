@@ -17,8 +17,11 @@ public class RatingServiceJDBC implements RatingService{
     @Override
     public void setRating(Rating rating) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(INSERT)
+             PreparedStatement statement = connection.prepareStatement(INSERT);
+             PreparedStatement st = connection.prepareStatement("DELETE FROM rating WHERE player = '" + rating.getPlayer() + "';");
+
         ) {
+            st.executeUpdate();
             statement.setString(1, rating.getPlayer());
             statement.setString(2, rating.getGame());
             statement.setInt(3, rating.getRating());

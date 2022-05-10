@@ -13,18 +13,49 @@ public class RatingServiceJPA implements RatingService{
 
     @Override
     public void setRating(Rating rating) {
-        entityManager.persist(rating);
+        var player = rating.getPlayer();
+        var game = rating.getGame();
+        System.out.println(getRating(game,player));
+        if(rating.getRating()<0||rating.getRating()>5){
+            System.out.println("tu sa nemal dostat");
+            return;
+        }
+
+        if(getRating(game,player)>0 && getRating(game,player)<5) {
+            System.out.println("tu sa nemal dostat");
+            try{
+                entityManager.persist(rating);
+            }
+            catch (Exception e){
+
+            }
+        }
+        else{
+            entityManager.persist(rating);
+        }
     }
 
     @Override
     public int getAverageRating(String game) {
-        double variable = (double) entityManager.createNamedQuery("Rating.getAverageRating").setParameter("nine_mens_morris", game).getSingleResult();
+        double variable =0;
+        try {
+             variable = (double) entityManager.createNamedQuery("Rating.getAverageRating").setParameter("nine_mens_morris", game).getSingleResult();
+        }
+        catch (Exception ignored){
+
+        }
         return (int)Math.round(variable);
     }
 
     @Override
     public int getRating(String game, String player) {
-        return (int) entityManager.createNamedQuery("Rating.getRating").setParameter("player",player).setParameter("nine_mens_morris",game).getSingleResult();
+        try {
+            return (int) entityManager.createNamedQuery("Rating.getRating").setParameter("player",player).setParameter("nine_mens_morris",game).getSingleResult();
+        }
+        catch (Exception e){
+
+        }
+        return -1;
     }
 
     @Override

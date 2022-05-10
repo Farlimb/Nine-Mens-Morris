@@ -2,6 +2,9 @@ package sk.tuke.kpi.kp.ninemensmorris.core;
 
 public class Mill {
     public boolean check(int i, Field field){
+        if(i==-1){
+            return false;
+        }
         Position position = field.getPositions().get(i);
         if (position==null)
             return false;

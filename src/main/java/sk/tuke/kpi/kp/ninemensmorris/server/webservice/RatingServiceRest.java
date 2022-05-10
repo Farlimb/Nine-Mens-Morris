@@ -14,6 +14,9 @@ public class RatingServiceRest {
 
     @GetMapping("/{game}")
     public int getAverageRating(@PathVariable String game) {
+        if(ratingService.getAverageRating(game)>5 && ratingService.getAverageRating(game)>-1){
+            return 3;
+        }
         return ratingService.getAverageRating(game);
     }
 

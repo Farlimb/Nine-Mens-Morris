@@ -3,6 +3,7 @@ import sk.tuke.kpi.kp.ninemensmorris.entity.Comment;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,8 +21,15 @@ public class CommentServiceJPA implements CommentService {
 
     @Override
     public List<Comment> getComments(String game) {
-        return entityManager.createNamedQuery("Comment.getComments")
-                .setParameter("nine_mens_morris", game).setMaxResults(10).getResultList();
+        try {
+            return entityManager.createNamedQuery("Comment.getComments")
+                    .setParameter("nine_mens_morris", game).setMaxResults(10).getResultList();
+        }
+        catch (Exception ignored){
+
+        }
+        return null;
+
     }
 
     @Override
