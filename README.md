@@ -16,8 +16,11 @@
   <h2 id="frontend">Frontend</h2>
 
   <p>The frontend is implemented in React. It provides the user interface for playing the game, viewing scores, and interacting with the commenting system. Refer to the <code>frontend</code> directory for more details.</p>
-
-
+  
+  <h2 id="backend">Iterations</h2>
+  <p>Iteration 1. VIDEO1: https://www.youtube.com/watch?v=lA2slrlfoLg JDBC</p>
+   <p>Iteration 2. VIDEO1: https://www.youtube.com/watch?v=lA2slrlfoLg JPA</p>
+    <p>Iteration 3. VIDEO1: https://www.youtube.com/watch?v=lA2slrlfoLg FrontEnd</p>
 </body>
 
 </html>
